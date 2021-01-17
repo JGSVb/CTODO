@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
+#include <stdint.h>
+#include <string.h>
 
 #define MAX_NAMESIZE 64
 #define MAX_DESCSIZE 1024
@@ -10,34 +12,40 @@
 #define VERSION 1
 #define SIGNATURE "ctodo"
 
-struct Todo{
+
+typedef struct Todo{
 	char name[MAX_NAMESIZE];
 	char description[MAX_DESCSIZE];
-	unsigned long int create_ts; // When was todo created
-	unsigned long int deadline; // Deadline of the todo
-};
+	uint64_t create_ts; // When was todo created
+	uint64_t deadline; // Deadline of the todo
+} Todo;
 
 typedef struct TodoFile{
 	short int version;
 	char signature[5];
 
-	char tablename[MAX_NAMESIZE];
+	char filename[MAX_NAMESIZE];
 
-	long unsigned int create_ts; // When was file created
-	long unsigned int change_ts; // Last change on file
+	uint64_t create_ts; // When was file created
+	uint64_t change_ts; // Last change on file
 	bool encrypted;
-	char *rawdata;
-};
+	char rawdata[];
+} TodoFile;
 
-int save_todo_file(const char *filename, struct TodoFile *todofile){
+int save_todo_file(const char *filename, TodoFile *todofile){
 	FILE *fp;
 	
 	fp = fopen(filename, "w");
 	ftruncate(fileno(fp), 0);
 	
-	fwrite(&todofile, sizeof(struct TodoFile), 1, fp);
+	fwrite(&todofile, sizeof(TodoFile), 1, fp);
 
 	fclose(fp);
 
 	return 0;
+}
+
+
+void serealize_todofile(char *dest, TodoFile *source){
+	dest;
 }
