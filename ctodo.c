@@ -12,30 +12,13 @@ int main(int argc, char **argv){
 	char *todo_char;
 	todo_char = (char *) &todo;
 	
-	TodoFile *todofile = malloc(sizeof(todofile) + sizeof(char [strlen(todo_char)]));
-	/*	
-	todofile->version = VERSION;
-	todofile->signature = SIGNATURE;
-	todofile->filename = "Grandes todos bue fixes";
-	todofile->create_ts = (uint64_t)time(NULL);
-	todofile->change_ts = (uint64_t)time(NULL);
-	todofile->encrypted = false;
-	todofile->rawdata = todo_char;
-	*/
+	TodoFile *todofile = create_todo_file(SIGNATURE, VERSION, "grandes todos bué nices", time(NULL), time(NULL));
 	
-	*todofile = {
-		VERSION,
-		SIGNATURE,
-		"Grandes todos bué fixes",
-		(uint64_t)time(NULL),
-		(uint64_t)time(NULL),
-		false,
-		todo_char
-	};
-	
-
-	printf("%lu", sizeof(todo));
-	//save_todo_file("/home/asv/Scripts/Todo/testfile.ctodo", (TodoFile *) &todofile);
+	// todofile->todos[0] = todo;
+	printf("%s", (char *) todofile);
+	TodoFile *other_file = malloc(sizeof(TodoFile));
+	read_todo_file("/home/asv/Scripts/Todo/testfile.ctodo", other_file);
+	save_todo_file("/home/asv/Scripts/Todo/testfile.ctodo", todofile);
 
 	return 0;
 }

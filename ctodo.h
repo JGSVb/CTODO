@@ -17,25 +17,27 @@ typedef struct Todo{
 	char name[MAX_NAMESIZE];
 	char description[MAX_DESCSIZE];
 	uint64_t create_ts; // When was todo created
-	uint64_t deadline; // Deadline of the todo
+	uint64_t deadline_ts; // Deadline of the todo
 } Todo;
 
 typedef struct TodoFile{
-	short int version;
 	char signature[5];
+	short int version;
 
-	char filename[MAX_NAMESIZE];
+	char name[MAX_NAMESIZE];
 
 	uint64_t create_ts; // When was file created
 	uint64_t change_ts; // Last change on file
-	bool encrypted;
-	char rawdata[];
+	// bool encrypted; // Maybe in the future
+	// char rawdata[sizeof(Todo) * MAX_TODOS];
+	Todo todos[MAX_TODOS];
 } TodoFile;
+
 
 int save_todo_file(const char *filename, TodoFile *todofile){
 	FILE *fp;
 	
-	fp = fopen(filename, "w");
+	fp = fopen(filename, "wb");
 	ftruncate(fileno(fp), 0);
 	
 	fwrite(&todofile, sizeof(TodoFile), 1, fp);
@@ -45,7 +47,27 @@ int save_todo_file(const char *filename, TodoFile *todofile){
 	return 0;
 }
 
+int read_todo_file(const char *filename, TodoFile *todofile){
+	FILE *fp;
 
-void serealize_todofile(char *dest, TodoFile *source){
-	dest;
+	fp = fopen(filename, "rb");
+	fread(&todofile, sizeof(TodoFile), 1, fp);
+	fclose(fp);
+
+	return 0;
+}
+
+TodoFile *create_todo_file(char *signature, short int version, char *name, uint64_t create_ts, uint64_t change_ts){
+
+	TodoFile *tf = malloc(sizeof(TodoFile));
+	// TodoFile *tf;
+
+	strcpy(tf->signature, signature);
+	tf->version = version;
+	strcpy(tf->name, name);
+	tf->change_ts = change_ts;
+	tf->create_ts = create_ts;
+	// strcpy(tf->rawdata, rawdata);
+
+	return tf;
 }
