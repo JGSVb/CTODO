@@ -1,0 +1,27 @@
+HEADER {
+	signature   U8[8]
+	version     U16
+	name        U8[32]
+		> Name of the todo file
+	description U8[1024]
+		> Description of the todo file
+	todo_count  U8
+	create_ts   U32
+		> When was todo file created
+	change_ts   U32
+		> When was todo file changed
+	encrypted   U8
+		> Is the file encrypted?
+}
+
+TODO {
+	name        U8[32]
+	description U8[1024]
+	deadline    U32
+	create_ts   U32
+}
+
+FILE {
+	HEADER
+	todos				TODO[256]
+}
