@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <string.h>
+#include <time.h>
 
 #define SIGNATURE_LEN 8
 #define MAX_NAMELEN 32
@@ -9,6 +11,12 @@
 
 #define SIGNATURE "ctodoAlx"
 #define VERSION 0x01
+
+
+union IntByte{
+	int64_t integer;
+	char bytes[8];
+};
 
 typedef struct Header{
 	char signature[SIGNATURE_LEN];
@@ -34,15 +42,21 @@ typedef struct File{
 	Todo *todos;
 } File;
 
+typedef union TodoByte{
+	Todo todo;
+	char bytes[sizeof(Todo)];
+} TodoByte;
 
-/*Writes a numeric value to a char with its bytes*/
-void num2bytes(char *bytes, int64_t value, size_t size){
-	for(int i=0; i<size; i++)
-		bytes[i] = value>>8*i & 0xFF;
-}
-/*Writes a numeric value from bytes*/
-void bytes2num(char *bytes, int64_t *dest, size_t size){
-	for(int i=0; i<size; i++)
-		*dest += bytes[i] << 8*(i-size);
-}
+Todo *new_todo(char *name, char *description, uint32_t create_ts, uint16_t deadline){
+	Todo *nt = malloc(sizeof(Todo));
+	
+	strncpy(nt->name, name, sizeof(nt->name));
+	strncpy(nt->description, description, sizeof(nt->description));
+	nt->create_ts = create_ts;
+	nt->deadline = deadline;
 
+	return nt;
+};
+
+void header2bytes(char *bytes, Header *header){
+}

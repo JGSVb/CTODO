@@ -1,14 +1,19 @@
 #include "ctodo.h"
 
+
 int main(int argc, char **argv){
-	int num = 4354;
-	int num2;
-	char *bytes = malloc(sizeof(int));
-
-	num2bytes(bytes, num, sizeof(int));
-	bytes2num(bytes, &num2, sizeof(int));
-	printf("%d\n", num);
-	printf("%d\n", num2);
-
+	// char text[60] = "Eia bué fixe ow mano";
+	Todo *todo = new_todo(
+		"Grande Todo",
+		"Ah pá, sei lá meu\n coloca aqui qualquer coisa que seja porreira",
+		time(NULL),
+		time(NULL));
+	
+	TodoByte todobyte;
+	todobyte.todo = *todo;
+	
+	TodoByte todobyte1;
+	memcpy(todobyte1.bytes, todobyte.bytes, sizeof(Todo));
+	printf("%s", todobyte1.todo.name);
 	return 0;
 }
