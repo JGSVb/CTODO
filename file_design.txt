@@ -10,6 +10,8 @@ HEADER {
 		> When was todo file created
 	change_ts   U32
 		> When was todo file changed
+	key_hash    U8
+		> Todo hash key (empty if there is no encryption)
 	encrypted   U8
 		> Is the file encrypted?
 }

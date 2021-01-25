@@ -1,19 +1,41 @@
-#include "ctodo.h"
+#include "file.h"
+#include "util.h"
 
+#define TESTING false
+	
+#if TESTING
+	void main_test(void){
+		Todo *todo1 = new_todo(
+			"Grande Todo",
+			"Ah pá, sei lá meu\n coloca aqui qualquer coisa blablabla queijo é bué bom :sunglasses:",
+			NOWTS,
+			NOWTS);
+	
+		Header *header = new_header(
+			"grandes todos bué fixes",
+			"coloca-se aqui qualquer coisa que também serve",
+			1,
+			NOWTS,
+			NOWTS,
+			"Hash bué seguro pessoal",
+			false);
+		
+		File *file1 = new_file(header);
+		file1->todos[0] = *todo1;
+	
+		byte *filebytes = file2bytearr(file1);
+		File *file2 = bytearr2file(filebytes);
+	
+		show_bytearr(filebytes, sizeof(Todo)*file1->header.todo_count + sizeof(Header));
+	}
+#else
+	#define main_test() NULL
+#endif
 
 int main(int argc, char **argv){
-	// char text[60] = "Eia bué fixe ow mano";
-	Todo *todo = new_todo(
-		"Grande Todo",
-		"Ah pá, sei lá meu\n coloca aqui qualquer coisa que seja porreira",
-		time(NULL),
-		time(NULL));
-	
-	TodoByte todobyte;
-	todobyte.todo = *todo;
-	
-	TodoByte todobyte1;
-	memcpy(todobyte1.bytes, todobyte.bytes, sizeof(Todo));
-	printf("%s", todobyte1.todo.name);
+
+	main_test();
+
+
 	return 0;
 }
