@@ -1,12 +1,8 @@
 #include "ctodo.h"
 
-byte val;
-
-static inline void show_bytearr(byte *byte_arr, size_t size){
-
-	for(int i=0; i<size; i++){
-		val = byte_arr[i];
-		isprint(val) ? printf("%c ", val) : printf("%x ", val);}
+static inline void print_bytearr(byte *byte_arr, size_t size){
+	for(int i=0; i<size; i++)
+		isprint(byte_arr[i]) ? printf("%c ", byte_arr[i]) : printf("%x ", byte_arr[i]);
 	printf("\n");
 }
 

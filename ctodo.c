@@ -1,7 +1,7 @@
 #include "file.h"
 #include "util.h"
 
-#define TESTING false
+#define TESTING true
 	
 #if TESTING
 	void main_test(void){
@@ -26,7 +26,7 @@
 		byte *filebytes = file2bytearr(file1);
 		File *file2 = bytearr2file(filebytes);
 	
-		show_bytearr(filebytes, sizeof(Todo)*file1->header.todo_count + sizeof(Header));
+		print_bytearr(filebytes, sizeof(Todo)*file1->header.todo_count + sizeof(Header));
 	}
 #else
 	#define main_test() NULL

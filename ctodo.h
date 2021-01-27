@@ -5,6 +5,7 @@
 #include <string.h>
 #include <time.h>
 #include <ctype.h>
+#include <gcrypt.h>
 
 #define NOWTS time(NULL)
 
