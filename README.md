@@ -1,4 +1,6 @@
-=======
+
+
+
 # CTODO
 
 #### With this project I learned a lot about structs, macros and was my first time using `libgcrypt`
@@ -24,7 +26,9 @@ To run the program you just need to execute the output file.
 ```
 ./ctodo
 ```
-=======
+
+
+
 # CTODO
 
 #### Com este projeto eu aprendi imenso acerca de structs, macros, static, typedef e foi a minha primeira vez a trabalhar com criptografia em C (com a `libgcrypt`)
